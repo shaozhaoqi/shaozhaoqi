@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC  
+    "-//mybatis.org//DTD Mapper 3.0//EN"  
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+   
+<mapper namespace="com.fh.mapper.type.ITypeMapper">
+
+	<select id="queryTypeList" resultType="com.fh.po.type.Type" >
+
+       select id,name,pId from t_type where isValid =1
+        order by sort desc
+
+    </select>
+
+</mapper>

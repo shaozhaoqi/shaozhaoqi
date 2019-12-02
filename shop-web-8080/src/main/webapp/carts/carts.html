@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>购物车</title>
+    <link rel="stylesheet" href="/carts/css/reset.css">
+    <link rel="stylesheet" href="/carts/css/carts.css">
+</head>
+<body>
+
+<section class="cartMain">
+
+    <div class="cartMain_hd">
+        <ul class="order_lists cartTop">
+            <li class="list_chk">
+                <!--所有商品全选-->
+                <input type="checkbox" id="all" class="whole_check" >
+                <label for="all" class="mark"></label>
+                全选
+            </li>
+            <li class="list_con">商品信息</li>
+            <li class="list_price">单价</li>
+            <li class="list_amount">数量</li>
+            <li class="list_sum">金额</li>
+            <li class="list_op">操作</li>
+        </ul>
+    </div>
+
+    <div class="cartBox">
+        <div class="order_content">
+           <!-- <ul class="order_lists" th:each="cart : ${cartList}">
+                <li class="list_chk">
+                    <input type="checkbox" th:id="'checkbox_'+${cart.productId}" class="son_check" th:value="${cart.productId}" th:checked="${cart.ischeck==1}?'true':'false'">
+                    <label th:for="'checkbox_'+${cart.productId}" th:class="${cart.ischeck==1}?'mark':''"></label>
+                </li>
+                <li class="list_con">
+                    <div class="list_img"><a href="javascript:;"><img th:src="${cart.imgurl}" alt=""></a></div>
+                    <div class="list_text"><a href="javascript:;"><span th:text="${cart.name}"></span></a></div>
+                </li>
+                <li class="list_price">
+                    <p class="price">￥<span th:text="${cart.price}"></span></p>
+                </li>
+                <li class="list_amount">
+                    <div class="amount_box">
+                        <a href="javascript:;" class="reduce reSty">-</a>
+                        <input type="text" th:oldSum="${cart.countNum}" class="sum" th:productId="${cart.productId}" th:value="${cart.countNum}">
+                        <a href="javascript:;" th:onclick="'javascript:addCartNum('+${cart.productId}+')'"  class="plus">+</a>
+                    </div>
+                </li>
+                <li class="list_sum">
+                    <p class="sum_price">￥<span th:text="${cart.smallAmount}"></span></p>
+                </li>
+                <li class="list_op">
+                    <p class="del"><a href="javascript:;" class="delBtn">移除商品</a></p>
+                </li>
+            </ul>-->
+        </div>
+    </div>
+    <!--底部-->
+    <div class="bar-wrapper">
+        <div class="bar-right">
+           <!-- <div class="piece">已选商品<strong class="piece_num" th:text="${counter}">0</strong>件</div>
+            <div class="totalMoney">共计: <strong class="total_text" th:text="${totalAmount}">0.00</strong></div>
+            <div class="calBtn"><a href="javascript:;" th:class="${counter!=0}?'btn_sty':''">结算</a></div>
+       --> </div>
+    </div>
+</section>
+<section class="model_bg"></section>
+<section class="my_model">
+    <p class="title">删除宝贝<span class="closeModel">X</span></p>
+    <p>您确认要删除该宝贝吗？</p>
+    <div class="opBtn"><a href="javascript:;" class="dialog-sure">确定</a><a href="javascript:;" class="dialog-close">关闭</a></div>
+</section>
+    <script src="/carts/js/jquery.min.js"></script>
+
+<script type="text/javascript">
+    //ajax 前置
+    $.ajaxSetup({
+        contentType:"application/x-www-form-urlencoded;charset=utf-8",
+        complete: function (XMLHttpRequest,textStatus) {
+            var nologin=XMLHttpRequest.getResponseHeader("NOLONGIN");
+            //alert(nologin);
+            if (nologin=="3000" ) {
+                window.location.href="/login/index.html";
+            }
+        },
+        //发送ajax请求前触发
+        beforeSend: function (xhr) { //可以设置自定义标头
+           var token = sessionStorage.getItem("token");
+            if (token==null){
+                token = "";
+            }
+            //alert("获取的token值:"+token);
+            xhr.setRequestHeader('token', token);
+        }
+    })
+    $(function () {
+        productShow();
+    })
+    //查出购物车里的商品
+    function productShow() {
+        $.ajax({
+            url: "http://localhost:8094/carts/cartsShow",
+            dataType: "json",
+            type: "post",
+            success: function (result) {
+                if (result.code==200){
+                    var v_data = result.data;
+                    var v_product = v_data.product;
+                    var v_sumCount = v_data.sumCount;
+                    var v_sumSubtotal = v_data.sumSubtotal;
+                    var v_btn_sty = v_sumCount!=0?"btn_sty":"";
+                    var v_productHtml="";
+                    var v_closeHtml="";
+                    console.log(v_product);
+                    for (var i = 0; i < v_product.length ; i++) {//==true
+                        var v_mark = v_product[i].isCheck?"mark":"";
+                        var v_reSty = v_product[i].count==1?"reSty":"";
+                        // alert(v_mark);
+                        v_productHtml+="<ul class=\"order_lists\" >\n" +
+                            "                <li class=\"list_chk\">\n" +
+                            "                    <input type=\"checkbox\"   checked='"+v_product[i].isCheck+"'>\n" +
+                            "                    <label  class='"+v_mark+"' onclick='isCheck("+v_product[i].productId+")'\"></label>\n" +
+                            "                </li>\n" +
+                            "                <li class=\"list_con\">\n" +
+                            "                    <div class=\"list_img\"><a href=\"javascript:;\"><img src='"+v_product[i].mainImg+"' alt=\"\"></a></div>\n" +
+                            "                    <div class=\"list_text\"><a href=\"javascript:;\"><span >"+v_product[i].productName+"</span></a></div>\n" +
+                            "                </li>\n" +
+                            "                <li class=\"list_price\">\n" +
+                            "                    <p class=\"price\">￥<span >"+v_product[i].price+"</span></p>\n" +
+                            "                </li>\n" +
+                            "                <li class=\"list_amount\">\n" +
+                            "                    <div class=\"amount_box\">\n" +
+                            "                        <a href=\"javascript:;\" class='reduce "+v_reSty+"' onclick='delCartNum("+v_product[i].productId+","+v_product[i].count+")'>-</a>\n" +
+                            "                        <input type=\"text\" value='"+v_product[i].count+"' class=\"sum\" value='"+v_product[i].productId+"' >\n" +
+                            "                        <a href=\"javascript:;\" onclick='addCartNum("+v_product[i].productId+")'  class=\"plus\">+</a>\n" +
+                            "                    </div>\n" +
+                            "                </li>\n" +
+                            "                <li class=\"list_sum\">\n" +
+                            "                    <p class=\"sum_price\">￥<span >"+v_product[i].subtotal+"</span></p>\n" +
+                            "                </li>\n" +
+                            "                <li class=\"list_op\">\n" +
+                            "                    <p class=\"del\"><a href=\"javascript:;\" onclick='delBth("+v_product[i].productId+")''>移除商品</a></p>\n" +
+                            "                </li>\n" +
+                            "            </ul>";
+
+                    }
+                    $(".order_content").html(v_productHtml);
+                    v_closeHtml += ' <div class="piece">已选商品<strong class="piece_num" >'+v_sumCount+'</strong>件</div>\n' +
+                        '            <div class="totalMoney">共计: <strong class="total_text" >'+v_sumSubtotal+'</strong></div>\n' +
+                        '            <div class="calBtn"><a href="javascript:;" class='+v_btn_sty+'>结算</a></div>\n' +
+                        '       ';
+                    $(".bar-right").html(v_closeHtml);
+                }
+
+            }
+        })
+    }
+    //添加个数
+    function addCartNum(productId){
+
+        $.ajax({
+            url:"http://localhost:8094/carts/addCartNum",
+            data:{
+                productId:productId
+            },
+            dataType:"json",
+            type:"post",
+            success:function(result){
+                    if(result.code==200){
+                        location.reload();
+                    }
+            }
+        })
+    }
+    //减少个数
+    function delCartNum(productId,count){
+        if (count==1){
+        return;
+        }
+        $.ajax({
+            url:"http://localhost:8094/carts/delCartNum",
+            data:{
+                productId:productId
+            },
+            dataType:"json",
+            type:"post",
+            success:function(result){
+                    if(result.code==200){
+                        location.reload();
+                    }
+            }
+        })
+    }
+    //是否选中
+    function isCheck(productId){
+        $.ajax({
+            url:"http://localhost:8094/carts/isCheck",
+            data:{
+                productId:productId
+            },
+            dataType:"json",
+            type:"post",
+            success:function(result){
+                    if(result.code==200){
+                        location.reload();
+                    }
+            }
+        })
+    }
+
+
+    function delBth(productId){
+
+        $.ajax({
+            url:"http://localhost:8094/carts",
+            data:{
+                productId:productId
+            },
+            dataType:"json",
+            type:"delete",
+            success:function(result){
+                if(result.code==200){
+                    location.reload();
+                }
+            }
+
+    })
+    };
+
+    $(".whole_check").click(function(){
+        $.ajax({
+            url:"http://localhost:8094/carts/isCheckAll",
+            dataType:"json",
+            type:"post",
+            success:function(result){
+                if(result.code==200){
+                    location.reload();
+
+                }
+            }
+        })
+
+
+    })
+
+
+
+</script>
+</body>
+</html>

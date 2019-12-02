@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<meta charset="UTF-8">
+<title>jQuery常用电商导航</title>
+
+
+<link type="text/css" href="/js/css/style.css" rel="stylesheet" />
+	<link rel="import" href="/common/head.html">
+	<link rel="import" href="/common/script.html">
+
+</head>
+
+<body>
+<!--左侧菜单-->
+<div class="sec-mainL left" >
+	<div class="mainL-hd-box">
+		<h2 class="mainL-hd"><a href="#">购物返彩贝商家</a></h2>
+	</div>
+	<!--菜单列表-->
+	<ul class="sec-mainNav" id="li">
+		<!--<li>
+			<h3>数码家电</h3>
+			<div class="menu-tab">
+				<a href="">京东</a>
+				<a href="">易迅</a>
+				<a href="">苏宁易购</a>
+				<div class="fix"></div>
+			</div>
+			<span class="menu-more">更多</span>
+			&lt;!&ndash;&lt;!&ndash;二级菜单&ndash;&gt;&ndash;&gt;
+			<div class="menu-panel">
+				<div class="menu-panel-hd">
+					<h4>热门分类</h4>
+					<div class="sub-group">
+						<a href="">京东</a>
+						<a href="">易迅</a>
+						<a href="">苏宁易购</a>
+						<a href="">新蛋商城</a>
+						<a href="">手机数码</a>
+						<a href="">摄像影音</a>
+						<a href="">耳麦音响</a>
+						<a href="">国美在线</a>
+					</div>
+				</div>
+				<div class="menu-panel-bd">
+					<ul>
+						<li>
+							<a href=""><img src="/static/img/0.png" /></a>
+						</li>
+						<li>
+							<a href=""><img src="/static/img/0 (1).png" /></a>
+						</li>
+						<li>
+							<a href=""><img src="/static/img/0 (2).png" /></a>
+						</li>
+						<li>
+							<a href=""><img src="/static/img/0 (3).png" /></a>
+						</li>
+						<li>
+							<a href=""><img src="/static/img/0.jpg" /></a>
+						</li>
+					</ul>
+				</div>
+				<a href="" class="menu-panel-btn">
+					<span>查看全部商家</span>
+					<em></em>
+				</a>
+			</div>
+		</li>
+		<li>
+			<h3>食品酒水</h3>
+			<div class="menu-tab">
+				<a href="">美食特产</a>
+				<a href="">酒水茶叶</a>
+				<a href="">蛋糕预订</a>
+				<div class="fix"></div>
+			</div>
+			<span class="menu-more">更多</span>
+			&lt;!&ndash;&lt;!&ndash;二级菜单&ndash;&gt;&ndash;&gt;
+			<div class="menu-panel">
+				<div class="menu-panel-hd">
+					<h4>热门分类</h4>
+					<div class="sub-group">
+						<a href="">美食特产</a>
+						<a href="">酒水茶叶</a>
+						<a href="">蛋糕预订</a>
+					</div>
+				</div>
+				<div class="menu-panel-bd">
+					<ul>
+						<li>
+							<a href=""><img src="/static/img/0.png" /></a>
+						</li>
+						<li>
+							<a href=""><img src="/static/img/0 (1).png" /></a>
+						</li>
+						<li>
+							<a href=""><img src="/static/img/0 (2).png" /></a>
+						</li>
+						<li>
+							<a href=""><img src="/static/img/0 (3).png" /></a>
+						</li>
+						<li>
+							<a href=""><img src="/static/img/0.jpg" /></a>
+						</li>
+					</ul>
+				</div>
+				<a href="" class="menu-panel-btn">
+					<span>查看全部商家</span>
+					<em></em>
+				</a>
+			</div>
+		</li>
+-->
+
+	</ul>
+</div>
+<div>
+	<div id="type"></div><br><br>
+	<div id="brand"></div>
+</div>
+<!--展示
+<div style="float: left">
+	<div class="container">
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel panel-info">
+					<div class="panel-heading">商品查询</div>
+					&lt;!&ndash; <div class="panel-body">
+                         <form class="form-horizontal" id="productForm" >
+                             <div class="form-group">
+                                 <label  class="col-sm-2 control-label">商品名</label>
+                                 <div class="col-sm-4">
+                                     <input type="text" class="form-control" id="productName" name="productName" placeholder="请输入商品名......">
+                                 </div>
+                                 <label  class="col-sm-2 control-label">价格范围</label>
+                                 <div class="col-sm-4">
+                                     <div class="input-group">
+                                         <input type="text" class="form-control" id="minProductPrice" name="minProductPrice" placeholder="最小价格..." >
+                                         <span class="input-group-addon" ><i class="glyphicon glyphicon-transfer"></i></span>
+                                         <input type="text" class="form-control"id="maxProductPrice" name="maxProductPrice"  placeholder="最大价格..." >
+                                     </div>
+                                 </div>
+                             </div>
+
+
+                             <div class="form-group">
+                                 <label  class="col-sm-2 control-label">生产日期</label>
+                                 <div class="col-sm-4">
+                                     <div class="input-group">
+                                         <input type="text" class="form-control" id="minCreateDate" name="minCreateDate" placeholder="最早生产日期..." >
+                                         <span class="input-group-addon" ><i class="glyphicon glyphicon-calendar"></i></span>
+                                         <input type="text" class="form-control" id="maxCreateDate" name="maxCreateDate" placeholder="最晚生产日期..." >
+                                     </div>
+                                 </div>
+                             </div>
+                             <div style="text-align: center">
+                                 <button type="button" class="btn btn-primary" onclick="search()"><i class="glyphicon glyphicon-search"></i>查询</button>
+                                 <button type="reset" class="btn btn-warning"><i class="glyphicon glyphicon-refresh"></i>重置</button>
+                             </div>
+                         </form>
+                     </div>&ndash;&gt;
+				</div>
+			</div>
+		</div>
+		<div style="background-color: #22eae5">
+			<button type="button" class="btn btn-primary" onclick="toAdd()"><i class="glyphicon glyphicon-plus"></i>添加</button>
+
+		</div>
+		<div class="row">
+			<div class="col-md-12">
+				<div class="panel panel-info">
+					<div class="panel-heading">商品展示</div>
+
+					<table id="example" class="table table-striped table-bordered" style="width:100%">
+						<thead>
+						<tr>
+							<th>id</th>
+							<th>类型</th>
+							<th>商品名称</th>
+							<th>宣传标题</th>
+							<th>主图片</th>
+							<th>副图片</th>
+							<th>商品描述</th>
+							<th>价格</th>
+							<th>库存</th>
+							<th>状态</th>
+							<th>创建时间</th>
+							<th>修改时间</th>
+							<th>操作</th>
+						</tr>
+						</thead>
+						<tfoot>
+						<tr>
+							<th>id</th>
+							<th>类型</th>
+							<th>商品名称</th>
+							<th>宣传标题</th>
+							<th>主图片</th>
+							<th>副图片</th>
+							<th>商品描述</th>
+							<th>价格</th>
+							<th>库存</th>
+							<th>状态</th>
+							<th>创建时间</th>
+							<th>修改时间</th>
+							<th>操作</th>
+						</tr>
+						</tfoot>
+					</table>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+&lt;!&ndash;新增&ndash;&gt;
+<div id="addProductDiv" style="display: none">
+	<form class="form-horizontal">
+		<div class="form-group">
+			<label  class="col-sm-2 control-label">商品名</label>
+			<div class="col-sm-5">
+				<input type="text" class="form-control" id="add_name"  placeholder="请输入商品名......">
+			</div>
+		</div>
+		<div class="form-group">
+			<label  class="col-sm-2 control-label">类型</label>
+			<div class="col-sm-5">
+				<input type="radio"  name = "add_brandId" value="1"  >家电
+				<input type="radio"  name = "add_brandId" value="2" >水果
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label  class="col-sm-2 control-label">官宣标题</label>
+			<div class="col-sm-5">
+				<input type="text" class="form-control" id = "add_subtitle" >
+			</div>
+		</div>
+
+
+		<div class="form-group">
+			<label  class="col-sm-2 control-label">主图片</label>
+			<div class="col-sm-5">
+				<input type="file"  id="add_mainImg" name="imageInfo" >
+				<input type="hidden"  id="add_mainImgPath" name="imgPath" />
+			</div>
+		</div>
+		<div class="form-group">
+			<label  class="col-sm-2 control-label">副图片</label>
+			<div class="col-sm-5">
+				<input type="file"  id="add_subImgs" name="imageInfo">
+				<input type="hidden"  id="add_subImgsPath" name="imgPath"/>
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label  class="col-sm-2 control-label">商品描述</label>
+			<div class="col-sm-5">
+				<input type="text" class="form-control" id = "add_detail" >
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label  class="col-sm-2 control-label">价格</label>
+			<div class="col-sm-5">
+				<input type="text" class="form-control" id="add_price" placeholder="请输入价格......">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label  class="col-sm-2 control-label">库存</label>
+			<div class="col-sm-5">
+				<input type="text" class="form-control" id="add_stock" placeholder="请输入库存......">
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label  class="col-sm-2 control-label">是否热销</label>
+			<div class="col-sm-5">
+				<input type="radio"  name="add_status" value="1">是
+				<input type="radio"  name="add_status" value="2">否
+			</div>
+		</div>
+
+
+
+	</form>
+</div>
+&lt;!&ndash;修改&ndash;&gt;
+<div id="updateProductDiv" style="display: none">
+	<form class="form-horizontal">
+		<div class="form-group">
+			<label  class="col-sm-2 control-label">商品名</label>
+			<div class="col-sm-5">
+				<input type="text" class="form-control" id="update_productName"  placeholder="请输入商品名......">
+			</div>
+		</div>
+		<div class="form-group">
+			<label  class="col-sm-2 control-label">价格</label>
+			<div class="col-sm-5">
+				<input type="text" class="form-control" id="update_productPrice" placeholder="请输入价格......">
+			</div>
+		</div>
+		<div class="form-group">
+			<label  class="col-sm-2 control-label">图片</label>
+			<div class="col-sm-5">
+				<input type="file" class="form-control" id="update_mainImagePath" >
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label  class="col-sm-2 control-label">生产日期</label>
+			<div class="col-sm-5">
+				<input type="text" class="form-control" id="update_createDate" placeholder="请输入生产日期......">
+			</div>
+		</div>
+
+
+		<div class="form-group">
+			<label  class="col-sm-2 control-label">是否热销</label>
+			<div class="col-sm-5">
+				<input type="radio"  name="update_sell" value="1">是
+				<input type="radio"  name="update_sell" value="2">否
+			</div>
+		</div>
+
+		<div class="form-group">
+			<label  class="col-sm-2 control-label">库存</label>
+			<div class="col-sm-5">
+				<input type="text" class="form-control" id="update_inventory" placeholder="请输入库存......">
+			</div>
+		</div>
+
+
+
+	</form>
+</div>-->
+<script type="text/javascript">
+$(function() {
+    queryType();
+    queryBrand();
+    queryList();
+	var $top = $('.sec-mainNav').offset().top + $('.sec-mainNav').height()
+	//左侧导航动画
+	$('.sec-mainNav li').on('mouseenter', function() {
+		var $height = $(this).offset().top + $(this).find('.menu-panel').outerHeight();
+		$(this).find('.menu-panel').show();
+		if($height - $top >= 0) {
+			$(this).find('.menu-panel').css({
+				top: -($height - $top) + 'px'
+			})
+		}
+	});
+	$('.sec-mainNav li').on('mouseleave', function() {
+		$(this).find('.menu-panel').hide();
+	});
+
+});
+	var typeList;
+	var brandList;
+	function queryType() {
+		$.get({
+			url: "http://localhost:8092/type/queryTypeList",
+			dataType: "json",
+            async: false,
+			success: function (data){
+                if (data.code == 200){
+                    typeList=data.data;
+				}
+			}
+		})
+	}
+
+	function queryBrand() {
+		$.get({
+			url: "http://localhost:8090/brand/queryBrandList",
+			dataType: "json",
+            async: false,
+			success: function (data){
+				if (data.code == 200){
+                    brandList=data.data;
+				}
+			}
+		})
+	}
+	var str="";
+	function queryList() {
+        for (var i = 0; i < typeList.length; i++) {
+			if (typeList[i].pid==0){
+			    str+="<li><h3>"+typeList[i].name+"</h3><div class=\"menu-tab\">"
+				/*拼接第二级类型*/
+                queryByPid(typeList[i].id,0);
+
+                queryBrandByid(typeList[i].id);
+
+            }
+
+
+        }
+		$("#li").html(str);
+		//console.log(str);
+
+    }
+    function queryByPid(id,fakeId){
+			//计数器
+            var v_count=0;
+            for (var i = 0; i < typeList.length; i++) {
+                if(fakeId==0){
+					if (typeList[i].pid==id){
+						v_count++;
+						str+="<a href=\"\">"+typeList[i].name+"</a>"
+						if (v_count >= 3){
+                            break;
+						}
+					}
+
+                }else {
+                    if (typeList[i].pid==id){					//rightShow 点击右边显示
+                        str+="<a href=\"javascript:void(0)\" onclick='rightShow("+id+")' >"+typeList[i].name+"</a>";
+                    }
+				}
+            }
+            if (fakeId==0) {
+				str+="<div class=\"fix\"></div></div><span class=\"menu-more\">更多</span><div class=\"menu-panel\"><div class=\"menu-panel-hd\"><h4>热门分类</h4><div class=\"sub-group\">";
+				queryByPid(id,1);
+            }else {
+                str+="</div></div><div class=\"menu-panel-bd\"><ul >";
+			}
+
+
+	}
+
+	function queryBrandByid(id,fakeId) {
+		var v_brand="";
+		//fakeId==1 的时候拼接的是右边的展示
+        for (var i = 0; i <brandList.length ; i++) {
+            if (fakeId==1){
+                if (brandList[i].typeId==id){
+                    v_brand+="<div style=\"float: left\" class='brandStyle' ><a href=\"javascript:void(0)\" onclick='styleCss(\"brandStyle\")'><img src='"+brandList[i].img+"' /></a></div>&nbsp;&nbsp;&nbsp;";
+                }
+			} else {
+                if (brandList[i].typeId==id){
+                    str+="<li><a href=\"javascript:void(0)\" onclick='rightShow("+id+")'><img src='"+brandList[i].img+"' /></a></li>";
+                }
+			}
+        }
+		if(fakeId==1){
+			$("#brand").html(v_brand);
+        }else {
+            str+="</ul></div><a href=\"\" class=\"menu-panel-btn\"><span>查看全部商家</span><em></em></a></div></li>";
+        }
+    }
+    //点击菜单的类型或者品牌 在右边展示
+    function rightShow(id) {
+		var v_type="";
+		//循环 根据id找到对应的类型
+        for (var i = 0; i < typeList.length ; i++) {
+			if (typeList[i].pid == id){
+                v_type+="<div style=\"float: left\" class='typeStyle' >&nbsp;&nbsp;&nbsp;<a href=\"javascript:void(0)\" onclick='styleCss(\"typeStyle\")'>"+typeList[i].name+"</a>&nbsp;&nbsp;&nbsp;</div>";
+            }
+        }
+        $("#type").html(v_type);
+        //根据id找到对应的品牌
+        queryBrandByid(id,1);
+
+    }
+    //选中的div加边框
+    function styleCss(result) {
+        $("."+result).click(function(){
+            if($(this).hasClass("bank_active")) return;
+            $("."+result).removeClass("back_active");
+            $(this).addClass("back_active");
+        });
+
+    }
+
+
+</script>
+<style type="text/css">
+	.back_active
+	{
+		border:1px solid red;
+	}
+</style>
+<!--<script>
+    var v_addProductDiv;
+    var v_updateProductDiv;
+    $(function () {
+        queryProductList();
+        initRestoreDiv();
+
+
+    });
+    function initRestoreDiv() {
+        v_addProductDiv = $("#addProductDiv").html();
+        v_updateProductDiv = $("#updateProductDiv").html();
+    }
+
+    var productTable;
+    function    queryProductList() {
+        productTable = $('#example').DataTable( {
+            "aLengthMenu" : [3, 6, 10],
+            "bFilter" : false,
+            "language": {
+                "url": "/js/DataTables-1.10.18/Chinese.json"
+            },
+            "processing": true,
+            "serverSide": true,
+            "ajax": {
+                "url": "http://localhost:8091/product/queryProductList",
+                "type": "get"
+            },
+
+            "columns": [
+                { "data": "id"},
+                { "data": "brandName" },
+                { "data": "name" },
+                { "data": "subtitle"},
+                { "data": "mainImg",
+                    render:function(data, type, row, meta){
+                        return "<img  src='"+data+"' width='30px'/>"
+                    } },
+                { "data": "subImgs" ,
+                    render:function(data, type, row, meta){
+                        return "<img  src='"+data+"' width='30px'/>"
+                    }},
+                { "data": "detail" },
+                { "data": "price" },
+                { "data": "stock" },
+                { "data": "status"},
+                { "data": "createTime"},
+                { "data": "updateTime"},
+                { "data": "id", render: function (data, type, row, meta){
+                        return "<div class=\"btn-group\" role=\"group\" >\n" +
+                            "  <button type=\"button\" class=\"btn btn-info\" onclick=\"updateProduct('"+data+"')\"><i class='glyphicon glyphicon-pencil'></i> 修改</button>\n" +
+                            "  <button type=\"button\" class=\"btn btn-danger\" onclick=\"deleteProduct('"+data+"')\"><i class='glyphicon glyphicon-trash'></i> 删除</button>\n" +
+                            "</div>"
+
+                    }}
+
+            ]
+        } );
+    }
+
+
+
+    var v_productAddDlg;
+    /*新增*/
+    function toAdd() {
+        initFileInput("v_productAddDlg");
+        v_productAddDlg = bootbox.dialog({
+            title: "新增",
+            message: $("#addProductDiv form"),
+            buttons: {
+                confirm: {
+                    label: '确认',
+                    className: 'btn-success',
+                    callback: function () {
+
+                        var v_name = $("#add_name",v_productAddDlg).val();
+                        var v_brandId = $("[name='add_brandId']:checked",v_productAddDlg).val();
+                        var v_subtitle = $("#add_subtitle",v_productAddDlg).val();
+                        var v_mainImgPath = $("#add_mainImgPath",v_productAddDlg).val();
+                        var v_subImgsPath = $("#add_subImgsPath",v_productAddDlg).val();
+                        var v_detail= $("#add_detail",v_productAddDlg).val();
+                        var v_price= $("#add_price",v_productAddDlg).val();
+                        var v_stock= $("#add_stock",v_productAddDlg).val();
+                        var v_status= $("[name='add_status']:checked",v_productAddDlg).val();
+
+
+                        var v_json = {};
+                        v_json.name=v_name;
+                        v_json.brandId=v_brandId;
+                        v_json.subtitle=v_subtitle;
+                        v_json.mainImg=v_mainImgPath;
+                        v_json.subImgs=v_subImgsPath;
+                        v_json.detail=v_detail;
+                        v_json.price=v_price;
+                        v_json.stock=v_stock;
+                        v_json.status=v_status;
+
+                        $.ajax({
+                            url:"/product/addProduct",
+                            data:v_json,
+                            type:"post",
+                            success:function(data){
+                                if (data.code=="200"){
+
+                                    search();
+
+                                } else{
+                                    bootbox.alert({
+                                        message: "<span class='glyphicon glyphicon-exclamation-sign'></span>添加失败",
+                                        size: 'small',
+                                        title: "提示信息"
+                                    });
+                                }
+                            },
+                        })
+                    }
+                },
+                cancel: {
+                    label: '取消',
+                    className: 'btn-danger'
+                }
+            },
+        });
+        $("#addProductDiv").html(v_addProductDiv);
+
+    }
+
+    /*删除*/
+    function deleteProduct(id) {
+        bootbox.confirm({
+            message: "确定要删除嘛？？?",
+            title:"删除提示框",
+            buttons: {
+                confirm: {
+                    label: '确认',
+                    className: 'btn-danger'
+                },
+                cancel: {
+                    label: '取消',
+                    className: 'btn-success'
+                }
+            },
+            callback: function (result) {
+                if (result){
+                    $.ajax({
+                        url:"/product/deleteProduct",
+                        data:{"id":id},
+                        type:"post",
+                        success:function(data){
+                            if(data.code=="200"){
+
+                                search();
+                            }else {
+                                bootbox.alert({
+                                    message: "<span class='glyphicon glyphicon-exclamation-sign'></span>删除失败",
+                                    size: 'small',
+                                    title: "提示信息"
+                                });
+
+                            }
+                        }
+                    })
+
+                }
+
+            }
+        });
+    }
+    /*图片*/
+    function initFileInput(v_productDlg) {
+
+        var settings = {
+            theme : 'fa',
+            dropZoneTitle : "请上传小于5M的图片！",
+            uploadUrl: "/file/uploadImage",
+            language : "zh",
+            autoReplace : true,
+            showCaption : false,
+            showUpload : true,
+            overwriteInitial : true,
+            uploadAsync : true,
+            showUploadedThumbs : true,
+            maxFileCount : 5,
+            minFileCount : 1,
+            dropZoneEnabled: false,
+            initialPreviewShowDelete : false,
+            showRemove : false,
+            showClose : false,
+            autoReplace : true,
+            overwriteInitial : true,
+            layoutTemplates : {
+                actionDelete:'',    //去掉图片的删除按钮
+                actionUpload: '',
+            },
+        }
+
+        $("#add_mainImg").fileinput(settings).on("fileuploaded", function(event, t, previewId, index) {
+            var data = t.response;
+
+            if (data.code == 200) {
+                if (v_productDlg=="v_productAddDlg"){
+                    $("#add_mainImgPath",v_productAddDlg).val(data.data);
+
+                }
+
+            }
+        });
+        $("#add_subImgs").fileinput(settings).on("fileuploaded", function(event, t, previewId, index) {
+            var data = t.response;
+
+            if (data.code == 200) {
+                if (v_productDlg=="v_productAddDlg"){
+                    $("#add_subImgsPath",v_productAddDlg).val(data.data);
+
+                }
+
+            }
+        });
+
+
+        search();
+    }
+
+    /* 条件查询*/
+    function search() {
+        var v_json = {};
+        v_json.productName = $("#productName").val();
+        v_json.minProductPrice = $("#minProductPrice").val();
+        v_json.maxProductPrice = $("#maxProductPrice").val();
+        v_json.minCreateDate = $("#minCreateDate").val();
+        v_json.maxCreateDate = $("#maxCreateDate").val();
+        productTable.settings()[0].ajax.data=v_json;
+        productTable.ajax.reload();
+    }
+
+</script>-->
+</body>
+</html>
