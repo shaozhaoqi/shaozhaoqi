@@ -1,2 +1,0 @@
-# shaozhaoqi
-个人
