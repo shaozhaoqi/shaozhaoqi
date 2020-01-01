@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="My97DatePicker/WdatePicker.js"></script>
+</head>
+<body>
+<form class="form-horizontal" id="updateFrom">
+    <input type="hidden" name="id" id="id">
+    <div class="row">
+        <div class="form-group">
+            <label class="col-md-4 control-label">药品名称</label>
+            <div class="col-md-6">
+                <input class="form-control"  id="drugname" name="drugname" maxlength="15" required >
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">药品价格</label>
+            <div class="col-md-6">
+                <input class="form-control" name="drugprice" id="drugprice" maxlength="15" required >
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">销量</label>
+            <div class="col-md-6">
+                <input class="form-control" name="drugsales" id="drugsales" maxlength="15" required >
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">库存</label>
+            <div class="col-md-6">
+                <input class="form-control" name="drugstock" id="drugstock" maxlength="15" required >
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">是否处方药</label>
+            <div class="col-md-6">
+                <label class="radio-inline">
+                    <input type="radio" name="isotc" value="1">是
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="isotc" value="2">否
+                </label>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">生产日期</label>
+            <div class="col-md-6">
+                <input  type="date" class="form-control" name="produceddate" onclick="WdatePicker()" id="produceddate" maxlength="15" >
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">适合人群</label>
+            <div class="col-md-6">
+                <label class="radio-inline">
+                    <input type="checkbox" name="person" value="1">幼儿
+                    <input type="checkbox" name="person" value="2">少年
+                    <input type="checkbox" name="person" value="3">青年
+                    <input type="checkbox" name="person" value="4">中年
+                    <input type="checkbox" name="person" value="5">老年
+                </label>
+            </div>
+        </div>
+
+
+
+          <div class="form-group">
+               <label class="col-sm-5 control-label">图片</label>
+               <div class="col-sm-3">
+                   <input type="file"  id="photo" name="upload" class="form-control">
+                   <input type="hidden" name="img" id="img">
+               </div>
+           </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">品牌</label>
+            <input type="hidden" id="brandval">
+            <div class="col-md-6">
+                <select class="form-control col-md-4"id="brandId2" name="brandid" >
+                    <option value="">===请选择===</option>
+                </select>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">产地</label>
+            <input type="hidden" id="areaval">
+            <div class="col-md-6">
+                <select class="form-control col-md-4"id="areaid2" name="areaid" >
+                    <option value="">===请选择===</option>
+                </select>
+            </div>
+        </div>
+
+
+    </div>
+</form>
+</body>
+<script>
+    var previewArr=[];
+    var url="/"+$("#img").val();
+    if(url!=null && url!=""){
+        previewArr.push(url)
+    }
+    $("#photo").fileinput({
+        language:'zh',
+        uploadUrl:"http://localhost:8081/drug/uploadFile",
+        showCaption : false,//是否显示标题,就是那个文本框
+        dropZoneEnabled : false,//是否显示拖拽区域，默认不写为true，但是会占用很大区域
+        initialPreview:previewArr,
+        initialPreviewAsData: true, // 特别重要
+    }).on("fileuploaded",function (event, result, previewId, index){
+        var url=result.response.realPath;
+        $("#img").val(url);
+    });
+
+    $(function () {
+        queryAreaLis();
+        queryBrandLis();
+    })
+
+    function queryAreaLis() {
+        $.post({
+            url:"http://localhost:8081/drug/queryAreaLis",
+            dataType:"json",
+            success:function(result) {
+                areaDates = result.data;
+                var areid =$("#areaval").val();
+                var selectArea='<option value="">==请选择==</option>';
+                for (var i = 0; i <areaDates.length ; i++) {
+                    if(areid==areaDates[i].areaid){
+                        selectArea+='<option value="'+areaDates[i].areaid+'" selected>'+areaDates[i].areaname+'</option>';
+                    }else {
+                        selectArea+='<option value="'+areaDates[i].areaid+'" >'+areaDates[i].areaname+'</option>';
+                    }
+                }
+                $("#areaid2").html(selectArea);
+            }
+        })
+    }
+    function queryBrandLis() {
+        $.post({
+            url:"http://localhost:8081/drug/queryBrandLis",
+            dataType:"json",
+            success:function (result) {
+                brandDates = result.data;
+                var classId=$("#brandval").val();
+                var selectBrand='<option value="">==请选择==</option>';
+                for (var i = 0; i <brandDates.length ; i++) {
+                    if(classId==brandDates[i].brandid){
+                        selectBrand+='<option value="'+brandDates[i].brandid+'" selected>'+brandDates[i].brandname+'</option>';
+                    }else {
+                        selectBrand+='<option value="'+brandDates[i].brandid+'">'+brandDates[i].brandname+'</option>';
+                    }
+                }
+                $("#brandId2").html(selectBrand);
+            }
+        })
+
+
+     /*   /!*
+        复选框回显出不来
+         *!/
+        arr=res.data.person;
+        var split=arr.split(",");
+        for (var i = 0; i <split.length; i++) {
+            $("input[type='checkbox']").each(function () {
+                if(this.value==split[i]){
+                    this.checked=true;
+                }
+            })
+        }
+*/
+    }
+</script>
+</html>
