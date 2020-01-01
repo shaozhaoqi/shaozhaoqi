@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="/commons/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/commons/datatable/DataTables-1.10.18/css/dataTables.bootstrap.min.css" rel="stylesheet"/>
+    <link href="/commons/fileinput/css/fileinput.min.css" rel="stylesheet"/>
+    <link href="/commons/ztree/css/bootstrapStyle/bootstrapStyle.css" rel="stylesheet"/>
+    <link href="/commons/bootstarpValidator/bootstarpValidator/css/bootstrapValidator.min.css"/>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/commons/ace/css/font-awesome.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="/commons/ace/css/ionicons.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/commons/ace/css/AdminLTE.css">
+    <link rel="stylesheet" href="/commons/ace/css/skins/skin-blue.min.css">
+    <link rel="stylesheet" href="/commons/ace/css/myCommon.css">
+
+    <script type="text/javascript" src="/commons/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="/commons/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/commons/datatable/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/commons/datatable/DataTables-1.10.18/js/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript" src="/commons/dateFormat.js"></script>
+    <script type="text/javascript" src="/commons/bootbox/bootbox.min.js"></script>
+    <script type="text/javascript" src="/commons/fileinput/js/fileinput.min.js"></script>
+    <script type="text/javascript" src="/commons/fileinput/js/locales/zh.js"></script>
+    <script type="text/javascript" src="/commons/ztree/js/jquery.ztree.all.min.js"></script>
+    <script type="text/javascript" src="/commons/bootstarpValidator/bootstarpValidator/js/bootstrapValidator.min.js"></script>
+    <script type="text/javascript" src="/commons/bootstarpValidator/bootstarpValidator/js/language/zh_CN.js"></script>
+    <script type="text/javascript" src="/commons/md5.js"></script>
+</head>
+<body>
+
+
+<!--增加=============================================================================-->
+<script type="text/html" id="addDrug">
+
+    <form class="form-horizontal" id="drugForm">
+        <input type="hidden" name="img" id="img">
+        <input type="hidden" name="id" id="id">
+
+        <div class="row">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">名称</label>
+            <div class="col-sm-5">
+                <input class="form-control" required maxlength="50" placeholder="请输入商品名" type="text"
+                       name="drugName" id="drugName"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">价格</label>
+            <div class="col-sm-5">
+                <input class="form-control" required maxlength="10" placeholder="请输入价格" type="text" name="drugPrice" id="drugPrice"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">库存</label>
+            <div class="col-sm-5">
+                <input class="form-control" required maxlength="20" placeholder="请输入库存" type="text" name="drugSales" id="drugSales"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">销量</label>
+            <div class="col-sm-5">
+                <input class="form-control" required maxlength="20" placeholder="请输入销量" type="text" name="drugStock" id="drugStock"/>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label  class="col-sm-2 control-label">品牌:</label>
+            <div class="col-sm-3">
+                <select class="form-control" id = "brandId" name = "brandId">
+
+                </select>
+            </div>
+        </div>
+              <div class="form-group row">
+                   <label  class="col-sm-2 control-label">地区:</label>
+                   <div class="col-sm-3">
+                       <select class="form-control" id = "areaId" name = "areaId">
+                           <option value="-1">请选择</option>
+
+                       </select>
+                   </div>
+               </div>
+        <div class="form-group row">
+            <label class="col-sm-2 control-label">适合人群:</label>
+            <label class=" radio-inline ">
+            &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="person"  value="1"  />幼年
+            </label>
+            <label class=" radio-inline">
+                &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="person"  value="2"/>少年
+            </label>
+            <label class=" radio-inline">
+                &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="person"  value="3"/>青年
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">生产日期</label>
+            <div class="col-sm-5">
+                <input class="form-control" type="text" name="producedDate" id="producedDate"/>
+            </div>
+        </div>
+        <!--<div class="form-group">
+            <label class="col-sm-2 control-label">过期日期</label>
+            <div class="col-sm-5">
+                <input class="form-control" type="date" name="expiredDate"/>
+            </div>
+        </div>-->
+        <div class="form-group">
+            <label class="col-sm-2 control-label">LOGO</label>
+            <div class="col-sm-5">
+                <input class="form-control" type="file" name="imgUrl" id="imgUrl"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">处方药</label>
+            <div class="col-sm-5">
+                <label class="radio-inline">
+                    <input type="radio" name="isOtc" value="1"/>非处方药
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="isOtc" value="2"/>处方药
+                </label>
+            </div>
+        </div>
+        </div>
+    </form>
+</script>
+
+
+
+
+<!--条件查询展示========================================================================-->
+<center>
+
+<div class="panel panel-primary" style="width: 1600px">
+
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">药品条件查询</div>
+                <div class="panel-body">
+                    <form class="form-horizontal" id="userSearch">
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">药品名:</label>
+                            <div class="col-sm-4">
+                                <input type="text" class="form-control" name="name" id="name"
+                                       placeholder="请输入商品名...">
+                            </div>
+                            <label class="col-sm-2 control-label">价格范围:</label>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="minPrice" id="minPrice"
+                                           placeholder="开始价格...">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-transfer"></i></span>
+                                    <input type="text" class="form-control" name="maxPrice" id="maxPrice"
+                                           placeholder="结束价格...">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group" id="search_CateDiv">
+                            <label class="col-sm-2 control-label">适合人群:</label>
+                            <div class="col-sm-4">
+                                <input type="checkbox" name="person " value="1"/>幼儿
+                                <input type="checkbox" name="person " value="2"/>少年
+                                <input type="checkbox" name="person " value="3"/>青年
+                                <input type="checkbox" name="person " value="4"/>中年
+                                <input type="checkbox" name="person " value="5"/>老年
+                                <input type="checkbox" name="person " value="6"/>妇幼
+                            </div>
+
+
+                            <label class="col-md-2 control-label">处方药:</label>
+
+                            <label class="radio-inline ">
+                                <input type="radio" name="isOTC " value="1"/>非处方药
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="isOTC " value="2"/>处方药
+                            </label>
+
+
+                        </div>
+                        <div class="form-group">
+
+                            <label class="col-sm-2 control-label">品牌:</label>
+                            <!--<div id="brandSelectq"></div>-->
+                            <div class="col-sm-4">
+                                <select class="form-control" name="areaId" id="brandSelectq"></select>
+                            </div>
+
+                            <label class="col-sm-2 control-label">地址:</label>
+                            <!--<div class="col-sm-4" id="areaSelectq"></div>-->
+                            <div class="col-sm-4">
+                                <select class="form-control" name="areaId" id="areaSelectq"></select>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group" style="float: right">
+
+                            <label class="col-sm-2 control-label">库存范围:</label>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="minStock" id="minStock"
+                                           placeholder="开始库存...">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-transfer"></i></span>
+                                    <input type="text" class="form-control" name="maxStock" id="maxStock"
+                                           placeholder="结束库存...">
+                                </div>
+                            </div>
+                            <label class="col-sm-2 control-label">创建时间:</label>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="minCreateDate" id="minCreateDate"
+                                           placeholder="创建时间...">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    <input type="text" class="form-control" name="maxCreateDate" id="maxCreateDate"
+                                           placeholder="结束时间...">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">销量范围:</label>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="minSales" id="minSales"
+                                           placeholder="开始销量...">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-transfer"></i></span>
+                                    <input type="text" class="form-control" name="maxSales" id="maxSales"
+                                           placeholder="结束销量...">
+                                </div>
+                            </div>
+                            <label class="col-sm-2 control-label">过期时间</label>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="startDate" id="startDate"
+                                           placeholder="开始过期时间...">
+                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                                    <input type="text" class="form-control" name="endDate" id="endDate"
+                                           placeholder="结束过期时间...">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div style="text-align: center">
+                            <button class="btn btn-primary" type="button" onclick="searchForm();"><i
+                                    class="glyphicon glyphicon-search"></i>查询
+                            </button>
+                            <button class="btn btn-default" type="reset"><i class="glyphicon glyphicon-refresh"></i>重置
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+            <div class="panel panel-info">
+            <div class="panel-heading" >
+                <h4>药品展示</h4>
+                <div align="left">
+
+                    <button onclick="quanxuan()" class="btn btn-primary">全选</button>
+                    <button onclick="fanxuan()" class="btn btn-primary">反选</button>
+                    <button onclick="quanbuxuan()" class="btn btn-primary">全不选</button>
+                    <button onclick="batchDelete()" class="btn btn-primary">批量删除</button>
+
+                    <button type="button" class="btn" onclick="addDrug()">
+                        <span class="glyphicon glyphicon-plus-sign"></span>
+                    </button>            </div>
+            </div>
+            <div class="panel-body">
+                <table id="drugTable" class="table table-bordered table-striped"></table>
+            </div>
+
+            </div>
+        </div>
+
+
+</div>
+
+</center>
+
+<!--=========================================================================================-->
+<script type="text/javascript">
+
+
+    //FileInput上传图片
+    function initFileInput() {
+        $("#imgUrl").fileinput({
+            language: 'zh',
+            uploadUrl: "http://localhost:8090/drugs/uploadFile",
+            showCaption: false,//是否显示标题,就是那个文本框
+            dropZoneEnabled: false,//是否显示拖拽区域，默认不写为true，但是会占用很大区域
+        }).on("fileuploaded", function (event, result, previewId, index) {
+            var url = result.response.data;
+            alert(url);
+            $("#img").val(url);
+        });
+    }
+
+/*查询========================================================================================*/
+    var drugTable = $("#drugTable").DataTable({
+        "serverSide": true,//true是服务器模式，false是客户端模式
+        "lengthMenu": [2,5, 10, 15],
+        "ajax": {
+            url: "http://localhost:8090/drugs/queryDrugList",
+            type: "post",
+            "dataSrc": function (result) {
+                return result.data;
+            },
+        },
+
+
+
+        "columns": [
+            {
+                "data": "id", "title": "<input type=\"checkbox\">", render: function (data, type, row, meta) {
+                    return '<input type="checkbox" name="checkbox" value="'+data+'">';
+                }
+            },
+            {"data": "drugName", "title": "名称"},
+            {"data": "drugPrice", "title": "价格"},
+            {
+                data: "img", "title": "品牌LOGO", render: function (data, type, row, meta) {
+                    //var url = "/" + data;
+                    return "<img src='"+data+"'style='width: 40px'/>";
+                }
+            },
+            {"data": "drugSales", "title": "销量"},
+            {"data": "drugStock", "title": "库存"},
+            {"data": "brandName", "title": "商品名称"},
+            {"data": "areaName", "title": "地区名称"},
+            {
+                data: "producedDate", "title": "生产日期", render: function (data, type, row, meta) {
+                    if (data != null) {
+                        return new Date(data).Format("yyyy-MM-dd");
+                    }
+                    return "";
+                }
+            },
+            {
+                data: "createDate", "title": "创建时间", render: function (data, type, row, meta) {
+                    if (data != null) {
+                        return new Date(data).Format("yyyy-MM-dd");
+                    }
+                    return "";
+                }
+            },
+            {
+                data: "updateDate", "title": "修改时间", render: function (data, type, row, meta) {
+                    if (data != null) {
+                        return new Date(data).Format("yyyy-MM-dd");
+                    }
+                    return "";
+                }
+            },
+            {
+                "data": "isOtc", "title": "处方药", render: function (data, type, row, meta) {
+                    return data == 1 ? "非处方药" :"处方药";
+                }
+            },
+            {"data":"person","title":"适合人群",render:function(data,type,row,meta){
+                    arr=data
+                    var  split=arr.split(",");
+                    ids='';
+                    for (var i = 0; i <split.length ; i++) {
+                        if(split[i]==1){
+                            ids+='幼儿'+",";
+                        }
+                        if(split[i]==2){
+                            ids+='少年'+",";
+                        }
+                        if(split[i]==3){
+                            ids+='青年'+",";
+                        }
+                        if(split[i]==4){
+                            ids+='中年'+",";
+                        }
+                        if(split[i]==5){
+                            ids+='老年'+",";
+                        }
+                        if(split[i]==6){
+                            ids+='孕妇'+",";
+                        }
+                    }
+                    ids=ids.substring(0,ids.length-1);
+                    return ids;
+                }},
+            {
+                "data": "id", "title": "操作", render: function (data, type, row, meta) {
+                    return '<button type="button" class="btn" onclick="updateDrug(' + data + ')">' +
+                        '<span class="glyphicon glyphicon-edit"></span></button>'
+                        +'<button type="button" class="btn" onclick="deleteDrug(' + data + ')">' +
+                        '<span class="glyphicon glyphicon-remove"></span></button>'
+
+
+                }
+            },
+
+        ],
+        "language": {
+            "url": "/commons/datatable/Chinese.json"
+        }
+    });
+
+
+
+
+
+    //条件查询======================================================================================
+    function searchForm(){
+        var jsonData={};
+        var drugName=$("#drugName").val();
+        //var isup=$("[name='isup']:checked").val();
+        var arr="";
+        $("input[type='checkbox']:checked").each(function () {
+            arr+=this.value+",";
+        })
+        arr=arr.substring(0,arr.length-1);
+
+        alert(arr)
+        /*var startPrice=$("#startPrice").val();
+        var endPrice=$("#endPrice").val();*/
+
+
+        jsonData.drugName=drugName;
+        // jsonData.isup=isup;
+
+
+        /* jsonData.startPrice=startPrice;
+         jsonData.endPrice=endPrice;*/
+
+
+
+        drugTable.settings()[0].ajax.data=jsonData;
+        drugTable.ajax.reload();
+
+    }
+
+
+
+
+
+    /*增加==========================================================================================*/
+    function addDrug(){
+        /*查询商品*/
+       $.ajax({
+            url:"http://localhost:8090/drugs/queryBrandList",
+            type:"post",
+            dataType:"json",
+            success:function (res) {
+                var  str="<option value='-1'>==请选择==</option>"
+                for (var i = 0; i <res.length ; i++) {
+                    str+="<option value='"+res[i].brandId+"'>"+res[i].brandName+"</option>"
+
+                }
+                $("#brandId").html(str);
+            }
+        });
+       /*查询地区*/
+        $.ajax({
+            url:"http://localhost:8090/drugs/queryAreaList",
+            type:"post",
+            dataType:"json",
+            success:function (res) {
+                var  str="<option value='-1'>==请选择==</option>"
+                for (var i = 0; i <res.length ; i++) {
+                    str+="<option value='"+res[i].areaId+"'>"+res[i].areaName+"</option>"
+
+                }
+                $("#areaId").html(str);
+            }
+        })
+        /*弹框*/
+        bootbox.confirm({
+            message: $("#addDrug").html(),
+            size:"large",
+            title:"新增用户信息",
+            buttons: {
+                confirm: {
+                    label: '保存',
+                    className: 'btn-success'
+                },
+                cancel: {
+                    label: '取消',
+                    className: 'btn-danger'
+                }
+            },
+            callback: function (result) {
+
+                if(result){
+                    $.ajax({
+                        url:"http://localhost:8090/drugs/addDrug",
+                        type:"post",
+                        dataType:"json",
+                        data:$("#drugForm").serialize(),
+                        success:function () {
+                            bootbox.alert("保存成功");
+                            drugTable.ajax.reload();
+
+                        },
+                        error:function () {
+                            alert("保存失败");
+                        }
+
+                    })
+                }
+            }
+        });
+        initFileInput();
+
+    }
+
+
+
+    /*修改=================================================================================================*/
+    function updateDrug(id){
+        /*查询商品*/
+        $.ajax({
+            url:"http://localhost:8090/drugs/queryBrandList",
+            type:"post",
+            dataType:"json",
+            success:function (res) {
+                var  str="<option value='-1'>==请选择==</option>"
+                for (var i = 0; i <res.length ; i++) {
+                    str+="<option value='"+res[i].brandId+"'>"+res[i].brandName+"</option>"
+
+                }
+                $("#brandId").html(str);
+            }
+        });
+        /*查询地区*/
+        $.ajax({
+            url:"http://localhost:8090/drugs/queryAreaList",
+            type:"post",
+            dataType:"json",
+            success:function (res) {
+                var  str="<option value='-1'>==请选择==</option>"
+                for (var i = 0; i <res.length ; i++) {
+                    str+="<option value='"+res[i].areaId+"'>"+res[i].areaName+"</option>"
+
+                }
+                $("#areaId").html(str);
+            }
+        })
+
+        $.get({
+            url:"http://localhost:8090/drugs",
+            data:{
+                "id":id
+            },
+            dataType:"json",
+            success:function (res) {
+                $("#drugName").val(res.data.drugName);
+                $("#drugPrice").val(res.data.drugPrice);
+                $("#drugSales").val(res.data.drugSales);
+                $("#drugStock").val(res.data.drugStock);
+                $("#img").val(res.data.img);
+                $("#id").val(res.data.id);
+                $("#brandId").val(res.data.brandId);
+                $("#areaId").val(res.data.areaId);
+
+                //单选
+                $("[name='isOtc']").each(function () {
+                        if(this.value==res.data.isOtc){
+                            this.checked=true;
+                        }
+                });
+                //复选框
+                arr=res.data.person;
+                var split=arr.split(",");
+                for (var i = 0; i <split.length; i++) {
+                    $("input[type='checkbox']").each(function () {
+                        if(this.value==split[i]){
+                            this.checked=true;
+                        }
+                    })
+                }
+
+                //时间
+                var date=new Date(res.data.producedDate);
+                var shijian= timestampToTime(date);
+                $("#producedDate").val(shijian);
+                //alert(shijian);
+
+
+                /*回显图片*/
+                var  preArr = [];
+                var  url= res.data.img;
+                $("#img").val(url);
+               // alert(url)
+                if(url !=null && url !=""){
+                    preArr.push(url);
+                }
+               // alert(preArr)
+                $("#imgUrl").fileinput({
+                    language : 'zh',
+                    uploadUrl:"http://localhost:8090/drugs/uploadFile",
+                    showCaption : false,//是否显示标题,就是那个文本框
+                    dropZoneEnabled : false,//是否显示拖拽区域，默认不写为true，但是会占用很大区域
+                    initialPreview:preArr, //回显必要
+                    initialPreviewAsData:true,//回显必要
+                }).on("fileuploaded",function (event, result, previewId, index) {
+                    var url=result.response.data;
+                    alert(url);
+                    $("#img").val(url);
+                });
+
+
+               // window.location.href="updateDrug.html";
+            }
+        })
+
+        bootbox.confirm({
+            message: $("#addDrug").html(),
+            title: "正在修改商品",
+            buttons: {
+                cancel: {
+                    label: "NO"
+                },
+                confirm: {
+                    label: "YES"
+                }
+            },
+            callback: function (result) {
+                if (result) {
+                    $.post({
+                        url: "http://localhost:8090/drugs/updateDrug",
+                        data: $("#drugForm").serialize(),
+                        dataType: "json",
+                        success: function (result) {
+                            bootbox.alert("修改存成功");
+                            drugTable.ajax.reload();
+                        },
+                        error:function () {
+                            alert("你错了");
+                        }
+
+                    })
+                }
+            }
+        })
+
+
+    }
+
+
+
+    //根据时间 格式化字符串
+    function timestampToTime(date) {
+        Y = date.getFullYear() + '-';
+        M = (date.getMonth()+1 < 10 ? '0'+(date.getMonth()+1) : date.getMonth()+1) + '-';
+        D = date.getDate() + ' ';
+        return Y+M+D;
+    }
+
+
+    //删除
+
+
+
+    function deleteDrug(id){
+        alert(id);
+        bootbox.confirm({
+            message: "确认删除吗",
+            title: "正在删除商品",
+            buttons: {
+                cancel: {
+                    label: "NO"
+                },
+                confirm: {
+                    label: "YES"
+                }
+            },
+            callback: function (result) {
+                if (result) {
+                    $.delete({
+                        url: "http://localhost:8090/drugs/deleteDrug",
+                        data: {"id":id},
+                        dataType: "text",
+                        success: function (result) {
+                            if(result=="ok"){
+                                alert("删除成功");
+                                drugTable.ajax.reload();
+                            }
+                        }
+                    })
+                }
+            }
+        })
+    }
+
+    /*============================================================================*/
+    function quanxuan() {
+        $("[name=checkbox]").each(function () {
+
+            this.checked = true;
+        })
+    }
+
+    function quanbuxuan() {
+        $("[name=checkbox]").each(function () {
+            this.checked = false;
+        })
+    }
+
+    function fanxuan() {
+        $("[name=checkbox]").each(function () {
+            this.checked = !this.checked;
+        })
+    }
+
+    function batchDelete() {
+        var con = confirm("您确定要删除吗？此操作不可恢复");
+        if (con) {
+            var ids = "";
+            $("[name=checkbox]:checked").each(function () {
+                ids += this.value + ",";
+            });
+            ids=ids.substr(0,ids.length-1);
+            alert(ids);
+            $.post({
+                url: "http://localhost:8090/drugs/batchDelete",
+                data: {
+                    ids: ids
+                },
+                dataType: "json",
+                success: function (rs) {
+                    alert(rs.message);
+                    if (rs.code == 200) {
+                        drugTable.ajax.reload();
+                    }
+                },
+                error: function () {
+                    alert("删除失败");
+                }
+            })
+        }
+
+    }
+
+
+</script>
+</body>
+</html>
