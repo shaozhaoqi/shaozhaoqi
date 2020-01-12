@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+    <link href="/commons/bootstrap/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/commons/datatable/DataTables-1.10.18/css/dataTables.bootstrap.min.css" rel="stylesheet"/>
+    <link href="/commons/fileinput/css/fileinput.min.css" rel="stylesheet"/>
+    <link href="/commons/ztree/css/bootstrapStyle/bootstrapStyle.css" rel="stylesheet"/>
+    <link href="/commons/bootstarpValidator/bootstarpValidator/css/bootstrapValidator.min.css"/>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="/commons/ace/css/font-awesome.css">
+    <!-- Ionicons -->
+    <link rel="stylesheet" href="/commons/ace/css/ionicons.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/commons/ace/css/AdminLTE.css">
+    <link rel="stylesheet" href="/commons/ace/css/skins/skin-blue.min.css">
+    <link rel="stylesheet" href="/commons/ace/css/myCommon.css">
+
+    <script type="text/javascript" src="/commons/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="/commons/bootstrap/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/commons/datatable/DataTables-1.10.18/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="/commons/datatable/DataTables-1.10.18/js/dataTables.bootstrap.min.js"></script>
+    <script type="text/javascript" src="/commons/dateFormat.js"></script>
+    <script type="text/javascript" src="/commons/bootbox/bootbox.min.js"></script>
+    <script type="text/javascript" src="/commons/fileinput/js/fileinput.min.js"></script>
+    <script type="text/javascript" src="/commons/fileinput/js/locales/zh.js"></script>
+    <script type="text/javascript" src="/commons/ztree/js/jquery.ztree.all.min.js"></script>
+    <script type="text/javascript" src="/commons/bootstarpValidator/bootstarpValidator/js/bootstrapValidator.min.js"></script>
+    <script type="text/javascript" src="/commons/bootstarpValidator/bootstarpValidator/js/language/zh_CN.js"></script>
+    <script type="text/javascript" src="/commons/md5.js"></script>
+</head>
+<body>
+
+<form class="form-horizontal" id="drugForm">
+    <input type="hidden" name="img" id="img">
+
+    <div class="row">
+        <div class="form-group">
+            <label class="col-sm-2 control-label">名称</label>
+            <div class="col-sm-5">
+                <input class="form-control" required maxlength="50" placeholder="请输入商品名" type="text"
+                       name="drugName" id="drugName"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">价格</label>
+            <div class="col-sm-5">
+                <input class="form-control" required maxlength="10" placeholder="请输入价格" type="text" name="drugPrice"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">库存</label>
+            <div class="col-sm-5">
+                <input class="form-control" required maxlength="20" placeholder="请输入库存" type="text" name="drugSales"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-2 control-label">销量</label>
+            <div class="col-sm-5">
+                <input class="form-control" required maxlength="20" placeholder="请输入销量" type="text" name="drugStock"/>
+            </div>
+        </div>
+
+        <!-- <div class="form-group row">
+             <label  class="col-sm-2 control-label">品牌:</label>
+             <div class="col-sm-3">
+                 <select class="form-control" id = "brandId" name = "brandId">
+
+                 </select>
+             </div>
+         </div>-->
+        <!--   <div class="form-group row">
+               <label  class="col-sm-2 control-label">地区:</label>
+               <div class="col-sm-3">
+                   <select class="form-control" id = "areaId" name = "areaId">
+                       <option value="-1">请选择</option>
+
+                   </select>
+               </div>
+           </div>-->
+        <div class="form-group row">
+            <label class="col-sm-2 control-label">适合人群:</label>
+            <label class=" radio-inline ">
+                &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="person"  value="小孩" checked />小孩
+            </label>
+            <label class=" radio-inline">
+                &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="person"  value="青年"/>青年
+            </label>
+            <label class=" radio-inline">
+                &nbsp;&nbsp;&nbsp;&nbsp;<input type="checkbox" name="person"  value="老人"/>老人
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label class="col-sm-2 control-label">生产日期</label>
+            <div class="col-sm-5">
+                <input class="form-control" type="date" name="producedDate"/>
+            </div>
+        </div>
+        <!--<div class="form-group">
+            <label class="col-sm-2 control-label">过期日期</label>
+            <div class="col-sm-5">
+                <input class="form-control" type="date" name="expiredDate"/>
+            </div>
+        </div>-->
+        <div class="form-group">
+            <label class="col-sm-2 control-label">LOGO</label>
+            <div class="col-sm-5">
+                <input class="form-control" type="file" name="imgUrl" id="imgUrl"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2">处方药</label>
+            <div class="col-sm-5">
+                <label class="radio-inline">
+                    <input type="radio" name="isOtc" value="1"/>非处方药
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="isOtc" value="0"/>处方药
+                </label>
+            </div>
+        </div>
+    </div>
+</form>
+<script type="text/javascript">
+    var  preArr = [];
+    var  url= $("#img").val();
+    if(url !=null && url !=""){
+        preArr.push(url);
+    }
+    $("#imgUrl").fileinput({
+        language : 'zh',
+        uploadUrl:"<%=request.getContextPath()%>/uploadFile",
+        showCaption : false,//是否显示标题,就是那个文本框
+        dropZoneEnabled : false,//是否显示拖拽区域，默认不写为true，但是会占用很大区域
+        initialPreview:preArr, //回显必要
+        initialPreviewAsData:true,//回显必要
+    }).on("fileuploaded",function (event, result, previewId, index) {
+        var url=result.response.data;
+        alert(url);
+        $("#img").val(url);
+    });
+
+</script>
+
+
+
+</body>
+</html>

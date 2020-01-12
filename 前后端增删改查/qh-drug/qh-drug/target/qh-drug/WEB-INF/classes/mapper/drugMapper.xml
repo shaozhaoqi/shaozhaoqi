@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fh.dao.DrugDao">
+
+
+
+    <select id="queryCount" resultType="long">
+     SELECT count(zd.id) FROM z_drug zd LEFT JOIN z_area za on zd.areaId = za.areaId
+        LEFT JOIN z_brand zb on zd.brandId = zb.brandId
+    </select>
+
+
+    <select id="queryDrugList" resultType="com.fh.entity.vo.DrugVo">
+       SELECT zd.*,za.areaName,zb.brandName FROM z_drug zd LEFT JOIN z_area za on zd.areaId = za.areaId
+        LEFT JOIN z_brand zb on zd.brandId = zb.brandId
+        limit #{start},#{length}
+    </select>
+
+
+    <insert id="addDrug" parameterType="com.fh.entity.po.DrugInfo" >
+    insert into  z_drug (drugName,drugPrice,drugSales,drugStock,isOtc,person,producedDate,createDate,updateDate,img,brandId,areaId)
+    values (#{drugName},#{drugPrice},#{drugSales},#{drugStock},#{isOtc},#{person},#{producedDate},#{createDate},#{updateDate},#{img},#{brandId},#{areaId})
+</insert>
+
+<!--下拉增加商品-->
+    <select id="queryBrandList" resultType="com.fh.entity.po.BrandInfo">
+        select * from z_brand
+    </select>
+    <!--下拉增加地区-->
+    <select id="queryAreaList" resultType="com.fh.entity.po.AreaInfo">
+        select * from z_area
+    </select>
+
+
+
+<!--批删-->
+    <delete id="batchDelete" parameterType="java.lang.Integer">
+        delete from  z_drug where id in
+
+        <foreach collection="list" item="i" open="(" separator="," close=")">
+
+            #{i}
+        </foreach>
+    </delete>
+
+</mapper>

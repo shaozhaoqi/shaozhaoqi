@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fh.dao.DrugDao">
+
+    <select id="queryDrugLis" resultType="com.fh.bean.vo.DrugVoBean">
+
+        select d.id, d.drugname,d.drugprice,d.drugsales,d.drugstock,d.isotc,d.person,d.produceddate,
+        d.expireddate,d.createdate,d.updatedate,d.img,a.areaname,b.brandname
+          from drug d
+        left join drug_area a on d.areaid = a.areaid
+        left join drug_brand b on d.areaid = b.brandid
+
+    </select>
+
+
+</mapper>

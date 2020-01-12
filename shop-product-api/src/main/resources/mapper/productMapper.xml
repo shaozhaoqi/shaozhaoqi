@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC  
+    "-//mybatis.org//DTD Mapper 3.0//EN"  
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+   
+<mapper namespace="com.fh.mapper.product.IProductMapper">
+	<sql id="searcheProduct">
+		<where>
+			<if test="typeId != null">
+				and  tt.id=#{typeId}
+			</if>
+			<if test="brandId != null">
+				and tb.id=#{brandId}
+			</if>
+		</where>
+	</sql>
+	<select id="queryProduct" resultType="com.fh.vo.product.ProductVo" >
+		SELECT sp.id,sp.detail,sp.name,tb.img,sp.main_img mainImg,sp.stock,sp.price,if(sp.status=1,"热销","正常") status,tt.name typeName
+		from t_shop_product sp LEFT JOIN t_brand tb
+		ON sp.brand_id = tb.id LEFT JOIN
+		t_product_type pt on sp.id = pt.productId LEFT JOIN
+		t_type tt on pt.typeId = tt.id
+		<include refid="searcheProduct"></include>
+		limit #{start},#{length}
+	</select>
+
+	<select id="queryCount" resultType="long" >
+		SELECT count(sp.id)
+		from t_shop_product sp LEFT JOIN t_brand tb
+		ON sp.brand_id = tb.id LEFT JOIN
+		t_product_type pt on sp.id = pt.productId LEFT JOIN
+		t_type tt on pt.typeId = tt.id
+	</select>
+</mapper>

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+
+<body>
+
+<form class="form-horizontal" id="addDrugFrom">
+    <div class="row">
+        <div class="form-group">
+            <label class="col-md-4 control-label">药品名称</label>
+            <div class="col-md-6">
+                <input class="form-control" name="drugname" maxlength="15" required >
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">价格</label>
+            <div class="col-md-6">
+                <input class="form-control" name="drugprice" maxlength="15" required >
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">销量</label>
+            <div class="col-md-6">
+                <input class="form-control" name="drugsales" maxlength="15" required >
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">库存</label>
+            <div class="col-md-6">
+                <input class="form-control" name="drugstock" maxlength="15" required >
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">处药方</label>
+            <div class="col-md-6">
+                <label class="radio-inline">
+                    <input type="radio" name="isotc" value="1">是
+                </label>
+                <label class="radio-inline">
+                    <input type="radio" name="isotc" value="2">否
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-4 control-label">适合人群</label>
+            <div class="col-md-6">
+                <label class="radio-inline">
+                    <input type="checkbox" name="person" value="幼儿">幼儿
+                    <input type="checkbox" name="person" value="少年">少年
+                    <input type="checkbox" name="person" value="青年">青年
+                    <input type="checkbox" name="person" value="中年">中年
+                    <input type="checkbox" name="person" value="老年">老年
+                </label>
+            </div>
+        </div>
+<!--
+         <div class="form-group">
+             <label class="col-md-4 control-label">产地</label>
+             <div class="col-md-6">
+                 <select class="form-control col-md-4"id="areaid" name="areaid" >
+                     <option value="">===请选择===</option>
+                 </select>
+             </div>
+         </div>
+
+         <div class="form-group">
+             <label class="col-md-4 control-label">品牌</label>
+             <div class="col-md-6">
+                 <select class="form-control col-md-4"id="brandid" name="brandid" >
+                     <option value="">===请选择===</option>
+                 </select>
+             </div>
+         </div>-->
+
+         <div class="form-group">
+             <label class="col-md-4 control-label">生产日期</label>
+             <div class="col-md-6">
+                 <input  type="date" class="form-control" name="produceddate" maxlength="15" >
+             </div>
+         </div>
+         <div class="form-group">
+             <label class="col-md-4 control-label">过期时间</label>
+             <div class="col-md-6">
+                 <input  type="date" class="form-control" name="expireddate" maxlength="15" >
+             </div>
+         </div>
+         <div class="form-group">
+             <label class="col-sm-5 control-label">图片</label>
+             <div class="col-sm-3">
+                 <input type="file"  id="photo" name="upload" class="form-control">
+                 <input type="hidden" name="img" id="img">
+             </div>
+         </div>
+    </div>
+</form>
+</body>
+<script>
+    $("#photo").fileinput({
+        language:'zh',
+        uploadUrl:"http://localhost:8081/drug/initFileInput",
+        showCaption : false,//是否显示标题,就是那个文本框
+        dropZoneEnabled : false,//是否显示拖拽区域，默认不写为true，但是会占用很大区域
+
+    }).on("fileuploaded",function (event, result, previewId, index){
+        var url=result.response.realPath;
+        $("#img").val(url);
+
+    });
+
+    $(function () {
+        queryAreaLis();
+        queryBrandLis();
+    })
+    var areaDates;
+    function queryAreaLis() {
+        $.post({
+            url:"http://localhost:8081/drug/queryAreaLis",
+            dataType:"json",
+            success:function(result) {
+                areaDates = result.data;
+                var selectArea='<option value="">==请选择==</option>';
+                for (var i = 0; i <areaDates.length ; i++) {
+                    selectArea+='<option value="'+areaDates[i].id+'">'+areaDates[i].areaname+'</option>';
+                }
+                $("#areaid").html(selectArea);
+            }
+        })
+    }
+    var brandDates;
+    function queryBrandLis() {
+        $.post({
+            url:"http://localhost:8081/drug/queryBrandLis",
+            dataType:"json",
+            success:function (result) {
+                brandDates = result.data;
+                var selectBrand='<option value="">==请选择==</option>';
+                for (var i = 0; i <brandDates.length ; i++) {
+                    selectBrand+='<option value="'+brandDates[i].id+'">'+brandDates[i].brandname+'</option>';
+                }
+                $("#brandid").html(selectBrand);
+            }
+        })
+    }
+</script>
+</html>
